@@ -1,0 +1,12 @@
+import requests
+import pandas as pd
+
+WHOOP_API_KEY = 'your_whoop_api_key'
+
+def get_whoop_data(start_date, end_date):
+    # API endpoint setup, authentication, data extraction logic
+    pass 
+
+if __name__ == '__main__':
+    data = get_whoop_data('2024-02-20', '2024-02-24')  
+    data.to_csv('data/raw_whoop_data.csv', index=False) 
