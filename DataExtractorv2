@@ -1,0 +1,37 @@
+import requests
+import pandas as pd
+import os  # For managing your API key
+
+# Placeholder for your actual WHOOP API endpoint 
+WHOOP_API_ENDPOINT = "https://api.whoop.com/v1/data"
+
+def get_whoop_data(start_date, end_date):
+    headers = {
+        "Authorization": f"Bearer {os.environ.get('WHOOP_API_KEY')}"
+    }
+
+    # Construct API request parameters (adjust according to WHOOP API docs)
+    params = {
+        "start": start_date,
+        "end": end_date
+    }
+
+    response = requests.get(WHOOP_API_ENDPOINT, headers=headers, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        df = pd.DataFrame(data)  # Customize how you parse the data
+        return df
+    else:
+        print("Error fetching WHOOP data. Check API key and endpoint")
+        return None
+
+if __name__ == '__main__':
+    start_date = '2024-02-26'  # Today's date
+    end_date = '2024-02-26'
+
+    data = get_whoop_data(start_date, end_date) 
+
+    if data is not None:
+        data.to_csv('data/raw_whoop_data.csv', index=False) 
+        print("WHOOP data saved successfully!")
